@@ -24,42 +24,20 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 class App extends Component {
- 
-  constructor(){
-    super()
-    this.state = {
-      robots: [],
-      searchField: ''
-    }
-  }
-
 
   componentDidMount(){
-    fetch ('https://jsonplaceholder.typicode.com/users')
-      .then (response => response.json())
-      .then (users => this.setState({robots: users}));    
+    this.props.onRequestRobots();  
   }
-
-  /*
-  onSearchChange = (event) => {
-    this.setState({searchField: event.target.value});
-    console.log(event.target.value);
-  }
-  */
 
   render(){
-    /* const {robots, searchField} = this.state; */
-    const {robots} = this.state;
-    const { searchField, onSearchChange } = this.props;
+    const { searchField, onSearchChange, robots, isPending } = this.props;
     const filteredRobot = robots.filter(robot => {
       return robot.name.toLowerCase().includes(searchField.toLowerCase()); 
     })
-    
-    if(!robots.length){
-      return '<h1>Loading</h1>';
-    }
-    else{
-      return (
+
+    return isPending ? 
+      <h1>Loading</h1> :
+      (
         <div className='tc'>
           <h1 className='f1'>RoboFriends</h1>
           <SearchBox searchChange={onSearchChange}/>
@@ -70,7 +48,6 @@ class App extends Component {
           </Scroll>
         </div>
       );
-    }
   }
 }
 
