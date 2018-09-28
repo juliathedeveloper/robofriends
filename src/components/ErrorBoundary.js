@@ -20,4 +20,4 @@ class ErrorBoundary extends Component {
 	}
 } 
 
-export deafult ErrorBoundary;
+export default ErrorBoundary;
